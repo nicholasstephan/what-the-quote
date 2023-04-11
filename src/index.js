@@ -1,5 +1,6 @@
 const { app, BrowserWindow, Tray, Menu, nativeImage, Notification } = require('electron');
 const { Configuration, OpenAIApi } = require("openai");
+const path = require('path');
 
 const configuration = new Configuration({
   apiKey: "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",
@@ -7,12 +8,18 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 let timer; 
 
+const prompts = [
+  ""
+]
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-let image = nativeImage.createFromPath('src/assets/quotes-solid.png');
+let image = nativeImage.createFromPath(
+  path.join(__dirname, "./src/assets/", "quotes-solid.png")
+);
 
 app.whenReady().then(() => {
   let icon = image.resize({width:16, height:16});
