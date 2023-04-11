@@ -3,7 +3,7 @@ const { Configuration, OpenAIApi } = require("openai");
 const path = require('path');
 
 const configuration = new Configuration({
-  apiKey: "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",
+  apiKey: "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",
 });
 const openai = new OpenAIApi(configuration);
 let timer; 
