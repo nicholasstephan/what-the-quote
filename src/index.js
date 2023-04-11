@@ -74,6 +74,10 @@ async function quote() {
     } else {
       console.error(`Error with OpenAI API request: ${error.message}`);
     }
+    json = {
+      quote: "I'm sorry, I couldn't think of anything.",
+      author: "ChatGPT"
+    };
   }
 
   let notification = new Notification({
