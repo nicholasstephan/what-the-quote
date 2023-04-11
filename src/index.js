@@ -3,14 +3,16 @@ const { Configuration, OpenAIApi } = require("openai");
 const path = require('path');
 
 const configuration = new Configuration({
-  apiKey: "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",
+  apiKey: "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",
 });
 const openai = new OpenAIApi(configuration);
 let timer; 
 
 const prompts = [
-  ""
-]
+  "Make up a funny quote.",
+  "Make up a ridiculous quote.",
+  "Make up a stupid quote.",
+];
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -18,10 +20,12 @@ if (require('electron-squirrel-startup')) {
 }
 
 let image = nativeImage.createFromPath(
-  path.join(__dirname, "./src/assets/", "quotes-solid.png")
+  path.join(__dirname, "assets", "quotes-solid.png")
 );
 
 app.whenReady().then(() => {
+  app.setAppUserModelId("WTQ");
+
   let icon = image.resize({width:16, height:16});
   tray = new Tray(icon)
 
@@ -33,11 +37,15 @@ app.whenReady().then(() => {
   
   tray.setContextMenu(contextMenu);
 
-  tray.setToolTip('What the quote');
+  tray.setToolTip('WTQ');
   tray.setTitle('')
 
   quote();
 });
+
+function generatePrompt() {
+  return prompts[Math.floor(Math.random() * prompts.length)];
+}
 
 async function quote() {
   clearTimeout(timer);
@@ -51,7 +59,7 @@ async function quote() {
   try {
     completion = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: "Make up a funny quote\nFormat as json with quote and author fields",
+      prompt: generatePrompt() + "\nFormat as json with quote and author fields",
       temperature: 0.7,
       max_tokens: 256,
       top_p: 1,
