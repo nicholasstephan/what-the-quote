@@ -3,7 +3,8 @@ const { Configuration, OpenAIApi } = require("openai");
 const path = require('path');
 
 const configuration = new Configuration({
-  apiKey: "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",
+  apiKey: "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",
+  organization: "org-zA19rDuBeRvxfY9veYHbghf1"
 });
 const openai = new OpenAIApi(configuration);
 let timer; 
@@ -83,7 +84,7 @@ async function quote() {
   let notification = new Notification({
     title: json.author,
     body: json.quote,
-    // icon: image.resize({width:16, height:16}),
+    icon: image.resize({width:256, height:256}),
   });
 
   notification.on('click', (e) => {
